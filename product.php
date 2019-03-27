@@ -34,5 +34,17 @@ class Product extends Database {
         $sql .= " ON DUPLICATE KEY UPDATE " . implode(',', $dup);
         $this->excute($sql);
     }
+    
+    function getCompetitorProducts($id) {
+        $sql = "SELECT 
+    cp.link, c.id, cp.product_id, c.name, c.link as c_link
+FROM
+    competitors AS c
+        LEFT JOIN
+    competitor_products AS cp ON c.id = cp.competitor_id
+        AND cp.product_id = {$id}";
+        $data = $this->excute($sql);
+        return $data->fetch_all(MYSQLI_ASSOC);
+    }
 
 }

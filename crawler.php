@@ -11,7 +11,7 @@ function product_crawler($link, $type = '') {
     foreach($html->find('a.product__category__content__item__link') as $e) {
         $tmp = array();
         $tmp['name'] = $e->find('h3.product__category__content__item__link__title', 0)->plaintext;
-        $tmp['price'] = $e->find('div.product__category__content__item__link__price', 0)->plaintext;
+        $tmp['price'] = substr($e->find('div.product__category__content__item__link__price', 0)->plaintext, 0, -6);
         $tmp['image'] = $e->find('div.product__category__content__item__link__img img', 0)->src;
         $tmp['link'] = $e->href;
         $tmp['type'] = $type;

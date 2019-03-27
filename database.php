@@ -29,4 +29,10 @@ class Database {
         $data = $this->excute($sql);
         return $data->fetch_all(MYSQLI_ASSOC);
     }
+    
+    function getDetail($id) {
+        $sql = "SELECT * FROM " . $this->_table . " WHERE id = {$id}";
+        $data = $this->excute($sql);
+        return $data->fetch_assoc();
+    }
 }

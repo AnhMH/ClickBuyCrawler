@@ -1,11 +1,20 @@
 <?php
 require 'database.php';
 require 'product.php';
+require 'competitorproduct.php';
+require 'competitor.php';
 
-$db = new Database();
 $product = new Product();
+$cp = new CompetitorProduct();
+$competitor = new Competitor();
 
 $data = $product->getAll();
+$competitorProducts = $cp->getAll();
+$competitors = $competitor->getAll();
+$cps = array();
+foreach ($competitorProducts as $val) {
+    $cps[$val['product_id']][$val['competitor_id']] = $val;
+}
 $stt = 1;
 ?>
 <!DOCTYPE html>
@@ -25,6 +34,28 @@ $stt = 1;
 
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">ClickBuy</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.php">Products <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="crawler.php" target="_blank">Update ClickBuy's Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="competitorcrawler.php" target="_blank">Update Competitor's Products</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
             <h2>Products</h2>
             <p>List products:</p>            
@@ -32,51 +63,43 @@ $stt = 1;
                 <thead>
                     <tr>
                         <th></th>
+                        <th>ID</th>
                         <th>Image</th>
                         <th>Name</th>
                         <!--<th>Type</th>-->
                         <th>Price</th>
-                        <th><a href="https://www.xtmobile.vn/" target="_blank">Xtm</a></th>
-                        <th><a href="https://didongxanh.com.vn/" target="_blank">Ddx</a></th>
-                        <th><a href="https://minhtuanmobile.com/" target="_blank">Mtm</a></th>
-                        <th><a href="https://didongviet.vn/" target="_blank">Ddv</a></th>
-                        <th><a href="https://didongthongminh.vn/" target="_blank">Ddtm</a></th>
-                        <th><a href="https://a-smart.vn/" target="_blank">As</a></th>
-                        <th><a href="https://mobilecity.vn/" target="_blank">MC</a></th>
-                        <th><a href="http://ihubdanang.vn/" target="_blank">IH</a></th>
-                        <th><a href="http://applecentervn.com/" target="_blank">AC</a></th>
+                        <?php foreach ($competitors as $cv): ?>
+                        <th><a href="<?php echo $cv['link'];?>" target="_blank" title="<?php echo $cv['name'];?>"><?php echo $cv['name'];?></a></th>
+                        <?php endforeach; ?>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($data as $p): ?>
-                    <?php 
-                    $p['price'] = substr($p['price'], 0, -6);
-                    ?>
-                    <tr>
-                        <td><?php echo $stt++;?></td>
-                        <td><img src="<?php echo $p['image'];?>" width="50"/></td>
-                        <td><a href="<?php echo $p['link'];?>" target="_blank"><?php echo $p['name'].' - '.$p['id'];?></a></td>
-                        <!--<td><?php echo $p['type'];?></td>-->
-                        <td><?php echo $p['price'];?></td>
-                        <td><?php echo $p['price'];?></td>
-                        <td><?php echo $p['price'];?></td>
-                        <td><?php echo $p['price'];?></td>
-                        <td><?php echo $p['price'];?></td>
-                        <td><?php echo $p['price'];?></td>
-                        <td><?php echo $p['price'];?></td>
-                        <td><?php echo $p['price'];?></td>
-                        <td><?php echo $p['price'];?></td>
-                        <td><?php echo $p['price'];?></td>
-                    </tr>
+                        <tr>
+                            <td><?php echo $stt++; ?></td>
+                            <td><a href="updateproduct.php?product_id=<?php echo $p['id'];?>"><?php echo $p['id']; ?></a></td>
+                            <td><img src="<?php echo $p['image']; ?>" width="50"/></td>
+                            <td><a href="<?php echo $p['link']; ?>" target="_blank"><?php echo $p['name']; ?></a></td>
+                            <td><?php echo $p['price'];?></td>
+                            <?php foreach ($competitors as $cv): ?>
+                            <td>
+                                <?php if (!empty($cps[$p['id']][$cv['id']])): ?>
+                                <a href="<?php echo $cps[$p['id']][$cv['id']]['link'];?>" target="_blank"><?php echo $cps[$p['id']][$cv['id']]['price'];?></a>
+                                <?php else: ?>
+                                -
+                                <?php endif; ?>
+                            </td>
+                            <?php endforeach;?>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     </body>
-    
+
     <script>
-    $(document).ready(function() {
-        $('#example').DataTable();
-    } );
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
     </script>
 </html>
