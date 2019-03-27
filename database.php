@@ -27,7 +27,13 @@ class Database {
     function getAll() {
         $sql = 'SELECT * FROM ' . $this->_table;
         $data = $this->excute($sql);
-        return $data->fetch_all(MYSQLI_ASSOC);
+        $result = array();
+        if ($data->num_rows > 0) {
+            while($row = $data->fetch_assoc()) {
+                $result[] = $row;
+            }
+        }
+        return $result;
     }
     
     function getDetail($id) {

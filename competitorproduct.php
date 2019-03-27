@@ -63,7 +63,13 @@ FROM
         LEFT JOIN
     competitors AS c ON cp.competitor_id = c.id WHERE c.id != 3";
         $data = $this->excute($sql);
-        return $data->fetch_all(MYSQLI_ASSOC);
+        $result = array();
+        if ($data->num_rows > 0) {
+            while($row = $data->fetch_assoc()) {
+                $result[] = $row;
+            }
+        }
+        return $result;
     }
 }
 

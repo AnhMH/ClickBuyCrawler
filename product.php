@@ -44,7 +44,13 @@ FROM
     competitor_products AS cp ON c.id = cp.competitor_id
         AND cp.product_id = {$id}";
         $data = $this->excute($sql);
-        return $data->fetch_all(MYSQLI_ASSOC);
+        $result = array();
+        if ($data->num_rows > 0) {
+            while($row = $data->fetch_assoc()) {
+                $result[] = $row;
+            }
+        }
+        return $result;
     }
 
 }
