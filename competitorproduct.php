@@ -8,6 +8,7 @@ class CompetitorProduct extends Database {
         'link',
         'price',
         'crawler_at',
+        'is_disable'
     );
 
     function insert($data) {
@@ -18,9 +19,14 @@ class CompetitorProduct extends Database {
              ) VALUES ";
         
         $values = array();
+        $productIds = array();
         foreach ($data as $v) {
             $values[] = "('{$v['product_id']}', '{$v['competitor_id']}', '{$v['link']}')";
+            $productIds[] = $v['product_id'];
         }
+        $updateSql = "UPDATE competitor_products SET is_disable = 1 WHERE product_id IN (" . implode(',', $productIds) . ")";
+        $this->excute($updateSql);
+        
         $sql .= implode(',', $values);
         $dup = array();
         foreach ($this->_elements as $e) {
@@ -61,7 +67,7 @@ class CompetitorProduct extends Database {
 FROM
     competitor_products AS cp
         LEFT JOIN
-    competitors AS c ON cp.competitor_id = c.id WHERE c.id != 3";
+    competitors AS c ON cp.competitor_id = c.id WHERE c.id != 3 AND cp.is_disable != 1";
         $data = $this->excute($sql);
         $result = array();
         if ($data->num_rows > 0) {

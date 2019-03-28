@@ -3,12 +3,19 @@ require 'database.php';
 require 'product.php';
 require 'competitorproduct.php';
 require 'competitor.php';
+require 'type.php';
+
+$typeId = !empty($_GET['type_id']) ? $_GET['type_id'] : '';
 
 $product = new Product();
 $cp = new CompetitorProduct();
 $competitor = new Competitor();
+$type = new Type();
 
-$data = $product->getAll();
+$types = $type->getAll();
+$data = $product->getAll(array(
+    'type' => $typeId
+));
 $competitorProducts = $cp->getAll();
 $competitors = $competitor->getAll();
 $cps = array();
@@ -58,7 +65,13 @@ $stt = 1;
         </nav>
         <div class="container">
             <h2>Products</h2>
-            <p>List products:</p>            
+            <label>Filter products:</label>
+            <select id="typeSelect">
+                <option value="">All</option>
+                <?php foreach ($types as $t): ?>
+                <option value="<?php echo $t['id'];?>" <?php echo !empty($typeId) & $typeId == $t['id'] ? "selected='selected'" : "";?>><?php echo $t['name'];?></option>
+                <?php endforeach;?>
+            </select>
             <table id="example" class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -100,6 +113,14 @@ $stt = 1;
     <script>
         $(document).ready(function () {
             $('#example').DataTable();
+            $('#typeSelect').on('change', function(){
+                var $val = $(this).val();
+                if ($val != '') {
+                    window.location.href = "index.php?type_id="+$val;
+                } else {
+                    window.location.href = "index.php";
+                }
+            });
         });
     </script>
 </html>

@@ -42,7 +42,7 @@ FROM
     competitors AS c
         LEFT JOIN
     competitor_products AS cp ON c.id = cp.competitor_id
-        AND cp.product_id = {$id}";
+        AND cp.product_id = {$id} AND cp.is_disable != 1";
         $data = $this->excute($sql);
         $result = array();
         if ($data->num_rows > 0) {

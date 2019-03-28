@@ -24,8 +24,19 @@ class Database {
         return $this->_conn->query($sql);
     }
     
-    function getAll() {
+    function getAll($cond = '') {
         $sql = 'SELECT * FROM ' . $this->_table;
+        if (!empty($cond)) {
+            $where = array();
+            foreach ($cond as $k => $c) {
+                if ($c != '') {
+                    $where[] = "{$k}='{$c}'";
+                }
+            }
+            if (!empty($where)) {
+                $sql .= " WHERE ".implode(", ", $where);
+            }
+        }
         $data = $this->excute($sql);
         $result = array();
         if ($data->num_rows > 0) {
