@@ -2,6 +2,7 @@
 
 class CompetitorProduct extends Database {
     protected $_table = 'competitor_products';
+    protected $_crawlerTimeout = 6*60*60;
     protected $_elements = array(
         'product_id',
         'competitor_id',
@@ -61,13 +62,16 @@ class CompetitorProduct extends Database {
         $this->excute($sql);
     }
     
-    function getAll() {
+    function getAll($isCrawler = '') {
         $sql = "SELECT 
     cp.id, cp.product_id, cp.competitor_id, cp.link, c.find_char, cp.crawler_at, cp.price, c.cut_char
 FROM
     competitor_products AS cp
         LEFT JOIN
     competitors AS c ON cp.competitor_id = c.id WHERE c.id != 3 AND cp.is_disable != 1";
+        if (!empty($isCrawler)) {
+            $sql .= " AND (cp.crawler_at < " . (time() - $this->_crawlerTimeout) . " or cp.crawler_at is null) LIMIT 21";
+        }
         $data = $this->excute($sql);
         $result = array();
         if ($data->num_rows > 0) {

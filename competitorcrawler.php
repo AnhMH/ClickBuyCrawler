@@ -23,11 +23,12 @@ function product_crawler($param) {
 $cp = new CompetitorProduct();
 $data = array();
 
-$competitorProducts = $cp->getAll();
+$competitorProducts = $cp->getAll(1);
 foreach ($competitorProducts as $v) {
     $data[] = product_crawler($v);
 }
 
 $cp->updatePrice($data);
 
+echo count($data);
 echo 'DONE';

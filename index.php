@@ -65,9 +65,9 @@ foreach ($productColorPrices as $vpcp) {
                         <li class="nav-item">
                             <a class="nav-link" href="crawler.php" target="_blank">Update ClickBuy's Products</a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link" href="clickbuycolorcrawler.php" target="_blank">Update ClickBuy's Products Color Price</a>
-                        </li>
+                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link" href="competitorcrawler.php" target="_blank">Update Competitor's Products</a>
                         </li>

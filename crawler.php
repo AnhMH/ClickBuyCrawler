@@ -8,7 +8,7 @@ ini_set('memory_limit', -1);
 set_time_limit(-1);
 ini_set('max_execution_time', -1);
 
-function product_crawler($link, $type = '') {
+function product_crawler($link, $type = '', $linkID = '') {
     $data = array();
     $html = file_get_html($link);
     $time = time();
@@ -20,6 +20,7 @@ function product_crawler($link, $type = '') {
         $tmp['link'] = $e->href;
         $tmp['type'] = $type;
         $tmp['crawler_at'] = $time;
+        $tmp['link_id'] = $linkID;
         $data[] = $tmp;
     }
     return $data;
@@ -35,11 +36,12 @@ $data = array();
 
 $crawlerLinks = $cl->getAll();
 foreach ($crawlerLinks as $v) {
-    $data[] = product_crawler($v['link'], $v['type_id']);
+    $data[] = product_crawler($v['link'], $v['type_id'], $v['id']);
 }
 
 foreach ($data as $products) {
     $product->insert($products);
 }
 
+echo count($data);
 echo 'DONE';

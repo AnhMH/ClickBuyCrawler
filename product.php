@@ -24,9 +24,17 @@ class Product extends Database {
              ) VALUES ";
         
         $values = array();
+        $linkIds = array();
+        $time = time();
         foreach ($data as $v) {
+            if (!empty($v['link_id'])) {
+                $linkIds[] = $v['link_id'];
+            }
             $values[] = "('{$v['name']}', '{$v['link']}', '{$v['price']}', '{$v['crawler_at']}', '{$v['type']}', '{$v['image']}')";
         }
+        $updateSql = "UPDATE crawler_links SET crawler_at = {$time} WHERE id IN (" . implode(',', $linkIds) . ")";
+        $this->excute($updateSql);
+        
         $sql .= implode(',', $values);
         $dup = array();
         foreach ($this->_elements as $e) {
