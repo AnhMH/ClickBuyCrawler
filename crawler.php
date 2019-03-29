@@ -4,6 +4,8 @@ require 'database.php';
 require 'crawlerlink.php';
 require 'product.php';
 
+ini_set('memory_limit', -1);
+
 function product_crawler($link, $type = '') {
     $data = array();
     $html = file_get_html($link);
@@ -37,5 +39,5 @@ foreach ($crawlerLinks as $v) {
 foreach ($data as $products) {
     $product->insert($products);
 }
-echo '<pre>';
-print_r($data);
+
+echo 'DONE';

@@ -3,6 +3,8 @@ require 'simplehtmldom/simple_html_dom.php';
 require 'database.php';
 require 'competitorproduct.php';
 
+ini_set('memory_limit', -1);
+
 function product_crawler($param) {
     $html = file_get_html($param['link']);
     $time = time();
@@ -25,5 +27,5 @@ foreach ($competitorProducts as $v) {
 }
 
 $cp->updatePrice($data);
-echo '<pre>';
-print_r($data);
+
+echo 'DONE';
