@@ -70,7 +70,27 @@ FROM
         LEFT JOIN
     competitors AS c ON cp.competitor_id = c.id WHERE c.id != 3 AND cp.is_disable != 1";
         if (!empty($isCrawler)) {
-            $sql .= " AND (cp.crawler_at < " . (time() - $this->_crawlerTimeout) . " or cp.crawler_at is null) LIMIT 21";
+            $sql .= " AND (cp.color_crawler_at < " . (time() - $this->_crawlerTimeout) . " or cp.color_crawler_at is null) LIMIT 21";
+        }
+        $data = $this->excute($sql);
+        $result = array();
+        if ($data->num_rows > 0) {
+            while($row = $data->fetch_assoc()) {
+                $result[] = $row;
+            }
+        }
+        return $result;
+    }
+    
+    function getProductColorCrawlers($isCrawler = '') {
+        $sql = "SELECT 
+    cp.id, cp.link, c.color_container, c.color_name, c.color_price, c.color_style, c.color_cut_char, c.crawler_type
+FROM
+    competitor_products AS cp
+        LEFT JOIN
+    competitors AS c ON cp.competitor_id = c.id WHERE c.color_container is not null AND c.color_name is not null AND c.color_price is not null AND cp.is_disable != 1";
+        if (!empty($isCrawler)) {
+            $sql .= " AND (cp.color_crawler_at < " . (time() - $this->_crawlerTimeout) . " or cp.color_crawler_at is null) LIMIT 21";
         }
         $data = $this->excute($sql);
         $result = array();
