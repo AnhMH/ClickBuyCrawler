@@ -4,6 +4,8 @@ require 'database.php';
 require 'competitorproduct.php';
 
 ini_set('memory_limit', -1);
+set_time_limit(-1);
+ini_set('max_execution_time', -1);
 
 function product_crawler($param) {
     $html = file_get_html($param['link']);

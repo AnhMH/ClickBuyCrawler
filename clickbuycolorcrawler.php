@@ -5,6 +5,8 @@ require 'product.php';
 require 'productcolorprice.php';
 
 ini_set('memory_limit', -1);
+set_time_limit(-1);
+ini_set('max_execution_time', -1);
 
 function getProductColorPrices ($param) {
     $result = array();
@@ -27,7 +29,7 @@ function getProductColorPrices ($param) {
 }
 
 $product = new Product();
-$products = $product->getAll();
+$products = $product->getProductColorCrawlers();
 $data = array();
 foreach ($products as $p) {
     $data[] = getProductColorPrices($p);
@@ -43,5 +45,6 @@ foreach ($data as $v) {
 $productColorPrice = new ProductColorPrice();
 $productColorPrice->insert($addUpdateData);
 
+echo count($addUpdateData);
 echo 'DONE';
 

@@ -4,6 +4,7 @@ require 'product.php';
 require 'competitorproduct.php';
 require 'competitor.php';
 require 'type.php';
+require 'productcolorprice.php';
 
 $typeId = !empty($_GET['type_id']) ? $_GET['type_id'] : '';
 
@@ -23,6 +24,14 @@ foreach ($competitorProducts as $val) {
     $cps[$val['product_id']][$val['competitor_id']] = $val;
 }
 $stt = 1;
+
+$productColorPrice = new ProductColorPrice();
+$productColorPrices = $productColorPrice->getAll();
+$pcp = array();
+foreach ($productColorPrices as $vpcp) {
+    $pcp[$vpcp['product_id']][] = $vpcp;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,6 +64,9 @@ $stt = 1;
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="crawler.php" target="_blank">Update ClickBuy's Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="clickbuycolorcrawler.php" target="_blank">Update ClickBuy's Products Color Price</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="competitorcrawler.php" target="_blank">Update Competitor's Products</a>
@@ -93,7 +105,14 @@ $stt = 1;
                             <td><a href="updateproduct.php?product_id=<?php echo $p['id'];?>"><?php echo $p['id']; ?></a></td>
                             <td><img src="<?php echo $p['image']; ?>" width="50"/></td>
                             <td><a href="<?php echo $p['link']; ?>" target="_blank"><?php echo $p['name']; ?></a></td>
-                            <td><?php echo $p['price'];?></td>
+                            <td>
+                                <?php echo $p['price'];?>
+                                <?php if (!empty($pcp[$p['id']])): ?>
+                                    <?php foreach ($pcp[$p['id']] as $vpcp): ?>
+                                <p style="font-size: 10px;"><span style="width: 10px; height: 10px; display:inline-block; background: #<?php echo $vpcp['color'];?>"></span> <?php echo /*$vpcp['name'].': '.*/$vpcp['price'];?></p>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </td>
                             <?php foreach ($competitors as $cv): ?>
                             <td>
                                 <?php if (!empty($cps[$p['id']][$cv['id']])): ?>

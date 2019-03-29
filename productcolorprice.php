@@ -21,9 +21,14 @@ class ProductColorPrice extends Database {
         
         $values = array();
         $productIds = array();
+        $time = time();
+        $productIds = array();
         foreach ($data as $v) {
+            $productIds[] = $v['product_id'];
             $values[] = "('{$v['product_id']}', '{$v['name']}', '{$v['price']}', '{$v['crawler_at']}', '{$v['color']}')";
         }
+        $updateSql = "UPDATE products SET color_crawler_at = {$time} WHERE id IN (" . implode(',', $productIds) . ")";
+        $this->excute($updateSql);
         
         $sql .= implode(',', $values);
         $dup = array();

@@ -3,6 +3,7 @@
 class Product extends Database {
 
     protected $_table = 'products';
+    protected $_colorCrawlerTimeout = 6*60*60;
     protected $_elements = array(
         'name',
         'link',
@@ -43,6 +44,19 @@ FROM
         LEFT JOIN
     competitor_products AS cp ON c.id = cp.competitor_id
         AND cp.product_id = {$id} AND cp.is_disable != 1";
+        $data = $this->excute($sql);
+        $result = array();
+        if ($data->num_rows > 0) {
+            while($row = $data->fetch_assoc()) {
+                $result[] = $row;
+            }
+        }
+        return $result;
+    }
+    
+    function getProductColorCrawlers() {
+        $time = time() - $this->_colorCrawlerTimeout;
+        $sql = "SELECT * FROM products WHERE color_crawler_at is null or color_crawler_at < {$time} LIMIT 7";
         $data = $this->excute($sql);
         $result = array();
         if ($data->num_rows > 0) {
