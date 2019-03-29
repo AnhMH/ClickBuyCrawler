@@ -60,7 +60,7 @@ foreach ($competitorProductColorPrices as $vcpcp) {
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">ClickBuy</a>
+                <a class="navbar-brand" href="index.php">ClickBuy</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -70,15 +70,15 @@ foreach ($competitorProductColorPrices as $vcpcp) {
                         <li class="nav-item active">
                             <a class="nav-link" href="index.php">Products <span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link" href="crawler.php" target="_blank">Update ClickBuy's Products</a>
-                        </li>
+                        </li>-->
 <!--                        <li class="nav-item">
                             <a class="nav-link" href="clickbuycolorcrawler.php" target="_blank">Update ClickBuy's Products Color Price</a>
                         </li>-->
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link" href="competitorcrawler.php" target="_blank">Update Competitor's Products</a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>

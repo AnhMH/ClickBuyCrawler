@@ -65,9 +65,18 @@ function getCompetitorColorPrices ($param) {
     $html = file_get_html($link);
     $data = $html->find($param['color_container']);
     foreach ($data as $e) {
-        $name = $e->find($param['color_name'], 0)->plaintext;
-        $price = substr($e->find($param['color_price'], 0)->plaintext, 0, $param['color_cut_char']);
-        $color = !empty($pram['color_stype']) ? $e->find($param['color_stype'], 0)->plaintext : '';
+        if (!empty($param['crawler_type'])) {
+            if ($param['crawler_type'] == 1) {
+                $name = !empty($e->attr[$param['color_name']]) ? $e->attr[$param['color_name']] : 'Color '.$stt++;
+                $price = substr($e->attr[$param['color_price']], 0, $param['color_cut_char']);
+                $color = !empty($param['color_style']) && !empty($e->attr[$param['color_style']]) ? preg_replace("/#/", "", $e->attr[$param['color_style']]) : '';
+            }
+        } else {
+            $name = $e->find($param['color_name'], 0)->plaintext;
+            $price = substr($e->find($param['color_price'], 0)->plaintext, 0, $param['color_cut_char']);
+            $color = !empty($pram['color_stype']) ? $e->find($param['color_stype'], 0)->plaintext : '';
+        }
+        
         if (empty($color)) {
             $color = getColorFromText($name);
         }
