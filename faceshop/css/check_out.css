@@ -1,0 +1,90 @@
+@import 'http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,vietnamese';
+body{
+	font-family: 'Roboto';
+	background:#fff;
+}
+.shiping-ajax::after{
+	color: red
+}
+body.step1 h1{
+	background: url("logo2.png") center center no-repeat;
+	width: 100%;
+	height: 60px;
+	font-size: 0;
+	padding: 0;
+}
+.step3 h1{
+	width: 500px;
+	font-size: 24px;
+	text-align: left;
+	padding-left: 15px;
+}
+
+.step3 h1:after {
+	content: "";
+	position: absolute;
+	left: calc(100% - 200px);
+	top: 0;
+	width: 300px;
+	height: 30px;
+	background: url("logo2.png") center center no-repeat;
+	background-size: 75%;
+}
+.step3 h1 .btn-back{left: -115px;top: 2px}
+.btn-checkout, .btn-checkout:hover , .btn-submit-coupon, .continue-coupon, .cancel-coupon, .btn-submit-coupon:hover{
+	background:#6E9602;
+}
+input[type=radio] {
+	display: inherit;
+}
+.label-radio{
+	background-image:url('../images/radio.png');
+	display:inline-block;
+	background-position: 0 0px;
+}
+.btn-back, .user-login a, .btn-coupon, .color-blue, .user-login{
+	color:#6E9602;
+}
+.line{border-color:#6E9602}
+.btn-arrow{
+	background:url('//hstatic.net/599/1000036599/1000133230/btn-arrow.png?v=339') 44% 46% no-repeat;
+}
+#purchase-form > div:nth-child(5) > div.shiping-ajax > span:nth-child(2) {
+	color: brown;
+}
+.show__info h2{
+	margin: 0;
+	margin-top: 25px;
+}
+.show__info ul{
+	padding: 15px;
+	list-style: none;
+	padding-top: 0;
+}
+.show__info ul li{
+	padding: 4px 0;
+}
+.use-coupon{
+	display: block !important;
+}
+p.promotion-shop a {
+	color: #9dbf17 !important;
+	font-weight: bold;
+	line-height: 22px;
+	font-size: 14px;
+}
+p.promotion-shop a:hover {
+	color: #337ab7 !important;
+}
+.promotion-shop {
+	display: none;
+}
+/*
+.shiping-ajax:after {
+content: "Có thể thanh toán khi nhận hàng ở TP. HCM và Hà Nội";
+margin-top: 20px;
+position: static;
+display: block;
+text-align: center;
+}
+*/

@@ -42,7 +42,8 @@ function getColorFromText($str) {
         'do|red' => 'dd3333',
         'xanh|blue' => '1e73be',
         'hong|pink' => 'f26ac5',
-        'bac|sliver' => 'dddddd'
+        'bac|sliver' => 'dddddd',
+        'tim|purple' => '9d58e2'
     );
     
     $colors = explode('-', $str);

@@ -55,12 +55,12 @@ $competitorProducts = $product->getCompetitorProducts($id);
                         <li class="nav-item active">
                             <a class="nav-link" href="index.php">Products <span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link" href="crawler.php" target="_blank">Update ClickBuy's Products</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="competitorcrawler.php" target="_blank">Update Competitor's Products</a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>
