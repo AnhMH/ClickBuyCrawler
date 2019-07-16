@@ -4,7 +4,7 @@ class Database {
     protected $_host = 'localhost';
     protected $_pass = '';
     protected $_user = 'root';
-    protected $_db = 'clickbuycrawler';
+    protected $_db = 'web_film';
     protected $_conn = null;
     protected $_table = '';
             
